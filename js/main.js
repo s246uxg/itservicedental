@@ -583,6 +583,9 @@
         document.getElementById('postReadTime').textContent = post.readTime;
         document.getElementById('postContent').innerHTML = post.content;
 
+        // Build Table of Contents from headings in post content
+        buildTOC();
+
         // Update meta tags
         document.querySelector('title').textContent = `${post.title} | IT Service Dental`;
         document.querySelector('meta[name="description"]').content = post.excerpt;
@@ -603,6 +606,104 @@
     } else {
       postTitle.textContent = 'Page Not Found';
       document.getElementById('postContent').innerHTML = '<p>No article specified. <a href="/blog">Browse all articles</a>.</p>';
+    }
+  }
+
+  // ===== BUILD TABLE OF CONTENTS =====
+  function buildTOC() {
+    const content = document.getElementById('postContent');
+    if (!content) return;
+
+    const headings = content.querySelectorAll('h2, h3');
+    if (headings.length < 2) {
+      // Hide TOC if not enough headings
+      const sidebar = document.getElementById('tocSidebar');
+      const mobile = document.querySelector('.toc-mobile');
+      if (sidebar) sidebar.style.display = 'none';
+      if (mobile) mobile.style.display = 'none';
+      return;
+    }
+
+    const desktopList = document.getElementById('tocDesktopList');
+    const mobileList = document.getElementById('tocMobileList');
+    if (!desktopList || !mobileList) return;
+
+    const desktopUl = document.createElement('ul');
+    const mobileUl = document.createElement('ul');
+
+    headings.forEach((heading, index) => {
+      const slug = 'toc-' + index + '-' + heading.textContent.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      heading.id = slug;
+
+      const isH3 = heading.tagName === 'H3';
+      const text = heading.textContent;
+
+      // Build link
+      const link = document.createElement('a');
+      link.href = '#' + slug;
+      link.className = 'toc-link' + (isH3 ? ' toc-h3' : '');
+      link.setAttribute('data-toc-slug', slug);
+      link.textContent = text;
+
+      // Desktop list item
+      const li = document.createElement('li');
+      li.appendChild(link.cloneNode(true));
+      desktopUl.appendChild(li);
+
+      // Mobile list item
+      const liM = document.createElement('li');
+      liM.appendChild(link.cloneNode(true));
+      mobileUl.appendChild(liM);
+    });
+
+    desktopList.appendChild(desktopUl);
+    mobileList.appendChild(mobileUl);
+
+    // Smooth scroll on click + active state
+    const allTocLinks = document.querySelectorAll('.toc-link');
+    allTocLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const slug = this.getAttribute('data-toc-slug');
+        const target = document.getElementById(slug);
+        if (target) {
+          allTocLinks.forEach(l => l.classList.remove('active'));
+          this.classList.add('active');
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // IntersectionObserver for scroll-spy active tracking
+    const tocData = [];
+    allTocLinks.forEach(link => {
+      const slug = link.getAttribute('data-toc-slug');
+      const el = document.getElementById(slug);
+      if (el) tocData.push({ el, link });
+    });
+
+    if (tocData.length > 0) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const slug = entry.target.id;
+            allTocLinks.forEach(l => {
+              const isActive = l.getAttribute('data-toc-slug') === slug;
+              l.classList.toggle('active', isActive);
+            });
+          }
+        });
+      }, {
+        rootMargin: '-96px 0px -60% 0px',
+        threshold: 0,
+      });
+
+      tocData.forEach(({ el }) => observer.observe(el));
+
+      // Mark first heading active on load
+      if (tocData.length > 0) {
+        tocData[0].link.classList.add('active');
+      }
     }
   }
 

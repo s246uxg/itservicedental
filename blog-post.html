@@ -47,8 +47,26 @@
     </div>
   </article>
 
-  <div class="blog-post-content" id="postContent">
-    <p>Loading article...</p>
+  <div class="blog-layout">
+    <!-- Mobile TOC (collapsible) -->
+    <div class="toc-mobile">
+      <details class="toc-details">
+        <summary class="toc-summary">📑 Table of Contents</summary>
+        <div id="tocMobileList"></div>
+      </details>
+    </div>
+
+    <div class="blog-post-content" id="postContent">
+      <p>Loading article...</p>
+    </div>
+
+    <!-- Desktop TOC sidebar -->
+    <aside class="toc-sidebar" id="tocSidebar">
+      <nav class="toc-nav">
+        <h2 class="toc-heading">📑 Table of Contents</h2>
+        <div id="tocDesktopList"></div>
+      </nav>
+    </aside>
   </div>
 
   <section class="section cta-section">
