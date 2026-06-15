@@ -1887,7 +1887,7 @@ ul { list-style: none; }
 }
 
 .toc-mobile-header {
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 700;
   color: var(--text-primary);
   padding: 16px 20px;
@@ -1916,7 +1916,8 @@ ul { list-style: none; }
 }
 
 #tocMobileList .toc-link {
-  padding: 8px 0 8px 12px;
+  padding: 12px 0 12px 16px;
+  font-size: 0.95rem;
 }
 
 /* Responsive: stack layout on tablet/mobile */
@@ -1932,5 +1933,17 @@ ul { list-style: none; }
   .toc-mobile {
     display: block;
     margin-bottom: 24px;
+  }
+
+  .blog-post-content {
+    overflow-x: hidden;
+    word-wrap: break-word;
+  }
+
+  .blog-post-content img,
+  .blog-post-content table,
+  .blog-post-content pre {
+    max-width: 100%;
+    overflow-x: auto;
   }
 }
