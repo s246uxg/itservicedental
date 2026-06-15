@@ -1801,7 +1801,7 @@ ul { list-style: none; }
 .blog-layout {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 40px 24px 60px;
   display: grid;
   grid-template-columns: 1fr 280px;
   gap: 40px;
@@ -1852,29 +1852,32 @@ ul { list-style: none; }
 .toc-link {
   display: block;
   font-size: 0.85rem;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   text-decoration: none;
-  padding: 6px 0 6px 12px;
+  padding: 8px 0 8px 12px;
   border-left: 2px solid transparent;
   transition: all 0.25s ease;
-  line-height: 1.4;
+  line-height: 1.45;
+  border-radius: 0 4px 4px 0;
 }
 
 .toc-link:hover {
-  color: var(--primary-light);
+  color: #fff;
   border-left-color: var(--primary-light);
+  background: rgba(14, 165, 233, 0.08);
 }
 
 .toc-link.toc-h3 {
-  padding-left: 24px;
+  padding-left: 28px;
   font-size: 0.8rem;
 }
 
 /* Active TOC link */
 .toc-link.active {
-  color: var(--primary);
-  border-left-color: var(--primary);
+  color: var(--primary-light);
+  border-left-color: var(--primary-light);
   font-weight: 600;
+  background: rgba(14, 165, 233, 0.1);
 }
 
 /* Mobile TOC (hidden on desktop) */
@@ -1887,14 +1890,18 @@ ul { list-style: none; }
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-primary);
-  padding: 16px 20px 12px;
-  border-bottom: 1px solid var(--dark-border);
+  padding: 16px 20px;
+  background: var(--dark-card);
+  border: 1px solid var(--dark-border);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
 }
 
 #tocMobileList {
   background: var(--dark-card);
   border: 1px solid var(--dark-border);
-  border-radius: 12px;
+  border-top: none;
+  border-radius: 0 0 12px 12px;
   overflow: hidden;
 }
 
