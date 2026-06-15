@@ -1880,45 +1880,27 @@ ul { list-style: none; }
 /* Mobile TOC (hidden on desktop) */
 .toc-mobile {
   display: none;
+  margin-bottom: 24px;
 }
 
-.toc-details {
+.toc-mobile-header {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--dark-border);
+}
+
+#tocMobileList {
   background: var(--dark-card);
   border: 1px solid var(--dark-border);
   border-radius: 12px;
   overflow: hidden;
 }
 
-.toc-summary {
-  cursor: pointer;
-  padding: 16px 20px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.toc-summary::-webkit-details-marker {
-  display: none;
-}
-
-.toc-summary::after {
-  content: "▾";
-  font-size: 0.8rem;
-  transition: transform 0.3s ease;
-  color: var(--text-muted);
-}
-
-details[open] .toc-summary::after {
-  transform: rotate(180deg);
-}
-
 #tocMobileList ul {
   list-style: none;
-  padding: 0 20px 16px;
+  padding: 8px 20px 16px;
   margin: 0;
 }
 
