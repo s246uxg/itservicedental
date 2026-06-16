@@ -659,17 +659,23 @@
     desktopList.appendChild(desktopUl);
     mobileList.appendChild(mobileUl);
 
-    // Smooth scroll on click + active state
+    // Smooth scroll on click + active state (green highlight)
     const allTocLinks = document.querySelectorAll('.toc-link');
+    let tocClickCooldown = false;
     allTocLinks.forEach(link => {
       link.addEventListener('click', function(e) {
         e.preventDefault();
         const slug = this.getAttribute('data-toc-slug');
         const target = document.getElementById(slug);
         if (target) {
+          // Manually mark clicked link as active (green)
           allTocLinks.forEach(l => l.classList.remove('active'));
           this.classList.add('active');
+          // Temporarily disable scroll-spy to keep green highlighted
+          tocClickCooldown = true;
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Re-enable scroll-spy after scroll animation completes
+          setTimeout(() => { tocClickCooldown = false; }, 800);
         }
       });
     });
@@ -683,7 +689,9 @@
     });
 
     if (tocData.length > 0) {
+      let tocObserverEnabled = true;
       const observer = new IntersectionObserver((entries) => {
+        if (tocClickCooldown) return; // Skip while click animation is running
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             const slug = entry.target.id;

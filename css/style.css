@@ -1872,12 +1872,12 @@ ul { list-style: none; }
   font-size: 0.8rem;
 }
 
-/* Active TOC link */
+/* Active TOC link — green highlight */
 .toc-link.active {
-  color: var(--primary-light);
-  border-left-color: var(--primary-light);
+  color: var(--success);
+  border-left-color: var(--success);
   font-weight: 600;
-  background: rgba(14, 165, 233, 0.1);
+  background: rgba(16, 185, 129, 0.1);
 }
 
 /* Mobile TOC (hidden on desktop) */
